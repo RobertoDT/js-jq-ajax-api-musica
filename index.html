@@ -18,10 +18,11 @@
         <div class="select-container">
           <select name="musical-genre" id="musical-genre">
             <option value="" class="begin">Seleziona un genere:</option>
-            <option value="Pop">Pop</option>
-            <option value="Rock">Rock</option>
-            <option value="Metal">Metal</option>
-            <option value="Jazz">Jazz</option>
+            <option value="tutti">Tutti i generi</option>
+            <option value="pop">Pop</option>
+            <option value="rock">Rock</option>
+            <option value="metal">Metal</option>
+            <option value="jazz">Jazz</option>
           </select>
         </div>
         <!-- /select container -->
@@ -31,12 +32,11 @@
 
     <div class="cds-container container">
 
-
     </div>
 
     <!-- template handlebars -->
     <script id="music-template" type="text/x-handlebars-template">
-      <div class="cd {{genre}}">
+      <div class="cd">
         <img src="{{poster}}" alt="">
         <h3>{{title}}</h3>
         <span class="author">{{author}}</span>

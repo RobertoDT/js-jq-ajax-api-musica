@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  var genereMusicale = $(".begin").next().val();
+
   $.ajax(
     {
       "url": "https://flynn.boolean.careers/exercises/api/array/music",
@@ -7,18 +9,7 @@ $(document).ready(function() {
       "success": function (data, stato) {
         var response = data.response;
 
-        //ciclo ogni disco presente nell'array
-        for(var i = 0; i < response.length; i++){
-          var dischi = response[i];
-
-          //preparo e compilo il mio template
-          var source = $("#music-template").html();
-          var template = Handlebars.compile(source);
-
-          var html = template(dischi);
-          //scrivo nel cds-container il contenuto del mio template
-          $(".cds-container").append(html);
-        }
+        filterAlbum(genereMusicale, response);
 
       },
       "error": function (richiesta, stato, errori) {
@@ -27,28 +18,47 @@ $(document).ready(function() {
     }
   );
 
-  $("#musical-genre").change(function(){
+//   $("#musical-genre").change(function(){
+//
+//     $.ajax(
+//       {
+//         "url": "https://flynn.boolean.careers/exercises/api/array/music",
+//         "method": "GET",
+//         "success": function (data, stato) {
+//
+//           var genereMusicale = $("#musical-genre").val();
+//
+//           var response = data.response;
+//
+//           for(var i = 0; i < response.length; i++){
+//             var dischi = response[i].genre;
+//             var myClass = "." + dischi;
+//             $(myClass).hide();
+//           }
+//
+//           $("." + genereMusicale).show();
+//
+//         },
+//         "error": function (richiesta, stato, errori) {
+//           alert("E' avvenuto un errore. " + errori);
+//         }
+//       }
+//     );
+//
+// });
 
-    // alert('Selected value: ' + $(this).val());
+$("#musical-genre").change(function(){
 
+  console.log(genereMusicale);
     $.ajax(
       {
         "url": "https://flynn.boolean.careers/exercises/api/array/music",
         "method": "GET",
         "success": function (data, stato) {
-
           var genereMusicale = $("#musical-genre").val();
-
           var response = data.response;
 
-          for(var i = 0; i < response.length; i++){
-            var dischi = response[i].genre;
-            var myClass = "." + dischi;
-            $(myClass).hide();
-          }
-
-          $("." + genereMusicale).show();
-
+          filterAlbum(genereMusicale, response);
         },
         "error": function (richiesta, stato, errori) {
           alert("E' avvenuto un errore. " + errori);
@@ -59,3 +69,24 @@ $(document).ready(function() {
 });
 
 });
+
+
+function filterAlbum(genere, risposta){
+  $(".cd").remove();
+
+  var source = $("#music-template").html();
+  var template = Handlebars.compile(source);
+
+  for(var i = 0; i < risposta.length; i++){
+
+    var dischi = risposta[i].genre.toLowerCase();
+    
+    if(genere == dischi){
+      var html = template(risposta[i]);
+      $(".cds-container").append(html);
+    } else if(genere == "tutti"){
+      var html = template(risposta[i]);
+      $(".cds-container").append(html);
+    }
+  }
+}
