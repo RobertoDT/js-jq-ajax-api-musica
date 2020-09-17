@@ -13,17 +13,30 @@
     <header>
       <div class="container">
         <img src="img/logo.png" alt="logo">
+
+        <!-- select container -->
+        <div class="select-container">
+          <select name="musical-genre" id="musical-genre">
+            <option value="" class="begin">Seleziona un genere:</option>
+            <option value="Pop">Pop</option>
+            <option value="Rock">Rock</option>
+            <option value="Metal">Metal</option>
+            <option value="Jazz">Jazz</option>
+          </select>
+        </div>
+        <!-- /select container -->
+
       </div>
     </header>
 
     <div class="cds-container container">
-      <!-- Disco ad esempio -->
+
 
     </div>
 
     <!-- template handlebars -->
     <script id="music-template" type="text/x-handlebars-template">
-      <div class="cd">
+      <div class="cd {{genre}}">
         <img src="{{poster}}" alt="">
         <h3>{{title}}</h3>
         <span class="author">{{author}}</span>
